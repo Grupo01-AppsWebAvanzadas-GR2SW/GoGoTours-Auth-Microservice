@@ -1,0 +1,24 @@
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__label {
+    font-size: var(--small-font-size);
+}
+
+.form__input {
+    padding: 0.75rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--dark-gray-color);
+    background: white;
+    font-size: var(--normal-font-size);
+    transition: 0.2s;
+    margin-bottom: 1rem;
+
+    &::placeholder {
+        color: var(--dark-gray-color);
+        font-size: var(--normal-font-size);
+        font-weight: var(--light-font-weight);
+    }
+}

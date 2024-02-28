@@ -1,0 +1,30 @@
+@import url("base/variables/colors.css");
+@import url("base/variables/text-style.css");
+@import url("base/buttons.css");
+@import url("base/texts.css");
+@import url("base/forms.css");
+@import url("base/navs.css");
+@import url("base/footers.css");
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: 0.2s;
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px white , 0 0 0 4px black;
+    }
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main.main {
+    flex-grow: 1;
+    padding: 2rem;
+}

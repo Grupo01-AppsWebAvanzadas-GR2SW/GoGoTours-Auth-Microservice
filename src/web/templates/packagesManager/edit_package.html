@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Package
+{% endblock %}
+
+{% block header %}
+    Package Manager GoGoTours
+    {% block head_tags %}
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/base/package.css') }}"/>
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/base/popup.css') }}"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+
+     <div id="popup" class="popup">
+        <div class="popup-content">
+            <i class="fas fa-check-circle"></i>
+            <p>Paquete actualizado correctamente</p>
+        </div>
+    </div>
+
+    <p class="package-title">EDITAR DATOS</p>
+     <div style="max-width: 600px; margin: 0 auto;" class="container">
+        <form id="edit-package-form" method="post" style="display: grid; gap: 10px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <label class="form__label" style="text-align: right;">Nombre del tour:</label>
+                <input class="form__input" type="text" name="updatePackageName" required value="{{ package.name }}"/>
+                <input class="form__input" type="hidden" name="previous_name" value="{{ package.name }}">
+                <label class="form__label" style="text-align: right;">Descripción del tour:</label>
+                <input class="form__input" type="text" name="updatePackageDescription" required value="{{ package.description }}"/>
+                <label class="form__label" style="text-align: right;">Lugar de destino:</label>
+                <input class="form__input" type="text" name="updatePackageDestinationPlace" required value="{{ package.destination_place }}"/>
+                <label class="form__label" style="text-align: right;">Duración del tour (días):</label>
+                <input class="form__input" type="number" step="1" name="updatePackageDuration" required value="{{ package.duration }}"/>
+                <label class="form__label" style="text-align: right;">Capacidad máxima:</label>
+                <input class="form__input" type="number" step="1" name="updatePackageMaxCapacity" required value="{{ package.max_capacity }}"/>
+                <label class="form__label" style="text-align: right;">Costo del tour ($):</label>
+                <input class="form__input" type="number" step="0.01" name="updatePackageCost" required value="{{ package.cost }}"/>
+                <label class="form__label" style="text-align: right;">Fecha de inicio:</label>
+                <input class="form__input" type="date" name="updatePackageStateDate" required value="{{ package.start_date }}"/>
+                <label class="form__label" style="text-align: right;">Fecha final:</label>
+                <input class="form__input" type="date" name="updatePackageEndDate" required value="{{ package.end_date }}"/>
+                <label class="form__label" style="text-align: right;">Imágen (Url):</label>
+                <input class="form__input" type="url" name="updatePackageUrl" required value="{{ package.image }}"/>
+            </div>
+            <div style="text-align: center;">
+                <button id="btn-editar" class="button button--primary" type="submit" style="padding: 8px 16px;">Actualizar información</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var popup = document.getElementById('popup');
+            var btnEditar = document.getElementById('btn-editar');
+            function validarFormulario() {
+                var campos = document.getElementById('edit-package-form').elements;
+                for (var i = 0; i < campos.length; i++) {
+                    if (campos[i].type !== 'submit' && campos[i].type !== 'hidden') {
+                        if (campos[i].value.trim() === '') {
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
+            }
+
+            btnEditar.addEventListener('click', function (event) {
+                var formularioValido = validarFormulario();
+
+                if (formularioValido) {
+                    popup.style.display = 'block';
+                    setTimeout(function () {
+                        popup.style.display = 'none';
+                    }, 8000);
+                } else {
+                    event.preventDefault();
+                    alert('Por favor, complete todos los campos correctamente.');
+                }
+            });
+        });
+    </script>
+
+{% endblock %}
+
+{% block page %}
+    edit packages
+{% endblock %}

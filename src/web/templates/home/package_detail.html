@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Detalles del paquete
+{% endblock %}
+
+{% block header %}
+    Home GoGoTours
+    {% block head_tags %}
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/base/package.css') }}"/>
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/base/popup.css') }}"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+
+    <p class="package-title"> {{ package.name }}</p>
+    <div class="container">
+
+        <div class="package-image">
+            <img src="{{ package.image }}" alt="Imagen promocional">
+        </div>
+
+        <div class="package-content">
+            <div class="package-details">
+                <p><strong>Descripción:</strong> {{ package.description }}</p>
+                <p><strong>Destino:</strong> {{ package.destination_place }}</p>
+                <p><strong>Duración:</strong> {{ package.duration }} días</p>
+                <p><strong>Capacidad máxima:</strong> {{ package.max_capacity }} personas</p>
+                <p><strong>Fecha de inicio:</strong> {{ package.start_date }}</p>
+                <p><strong>Fecha de regreso:</strong> {{ package.end_date }}</p>
+                <p><strong>Precio:</strong> {{ package.cost }} $</p>
+            </div>
+            <div style="display: flex">
+                {% if not session.get("is_admin") %}
+                    <form id="chat-form" method="post" class="package-button">
+                        <button type="button" id="reserve-button"
+                                class="button button--primary align-center button-info">
+                            ¡Reserva ahora!
+                        </button>
+                    </form>
+                    <div class="package-button">
+                        <!-- TODO: Add admin_id parameter -->
+                        <a href="#" class="button button--secondary align-center button-info" id="chat-button">
+                            Chatea con un asesor
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- If user is ADMIN  -->
+    {% if session.get("is_admin") %}
+        <div class="d-flex align-items-end ">
+            <a href="../edit_package/{{ package.name }}" class="button button--secondary" style="margin-bottom: 5px">
+                <i class="fas fa-edit"></i> Editar información
+            </a>
+        </div>
+
+        <div class="d-flex align-items-end ">
+            <a href="/deletePackage/{{ package.name }}" class="button button--primary">
+                <i class="fas fa-trash"></i> Eliminar tour
+            </a>
+        </div>
+
+    {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var reserveButton = document.getElementById('reserve-button');
+            if (reserveButton) {
+                reserveButton.addEventListener('click', function () {
+                    var confirmMessage;
+                    {% if session.get("id") %}
+                        confirmMessage = "¿Estás seguro de que deseas reservar este paquete?";
+                    {% else %}
+                        confirmMessage = "Debes iniciar sesión para continuar con la reserva.";
+                    {% endif %}
+                    if (confirm(confirmMessage)) {
+                        document.getElementById('chat-form').submit();
+                    } else {
+                    }
+                });
+            }
+        });
+    </script>
+
+
+{% endblock %}

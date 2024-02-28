@@ -1,0 +1,23 @@
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4CAF50; /* Fondo verde */
+    color: #fff; /* Texto blanco */
+    padding: 20px;
+    border: 1px solid #45a049; /* Borde más oscuro */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.popup-content {
+    text-align: center;
+}
+
+.popup i {
+    color: #fff; /* Color del ícono blanco */
+    font-size: 24px;
+    margin-right: 10px;
+}
