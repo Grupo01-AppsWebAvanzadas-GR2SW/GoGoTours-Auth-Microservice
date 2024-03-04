@@ -1,15 +1,14 @@
+from fastapi import Depends
+
 from src.domain.auth.entities.user import User
 from src.application.auth.services.signup_service_async import SignupServiceAsync
 from src.application.auth.dtos.user_signup_request_dto import UserSignupRequestDto
-from src.application.auth.dtos.user_response_dto import UserResponseDto
 from src.application.auth.repositories.users_repository_async import UsersRepositoryAsync
-from injector import inject
 import bcrypt
 
 
 class DefaultSignupServiceAsync(SignupServiceAsync):
-    @inject
-    def __init__(self, users_repository_async: UsersRepositoryAsync):
+    def __init__(self, users_repository_async: UsersRepositoryAsync = Depends(UsersRepositoryAsync)):
         self._users_repository_async = users_repository_async
 
     async def signup_user(self, signup_request: UserSignupRequestDto):

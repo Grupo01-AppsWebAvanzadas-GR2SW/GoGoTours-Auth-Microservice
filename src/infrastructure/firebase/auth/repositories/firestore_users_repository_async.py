@@ -1,6 +1,6 @@
+from fastapi import Depends
 from google.cloud.firestore import AsyncClient
 
-from injector import inject
 from src.domain.auth.entities.user import User
 from src.application.auth.repositories.users_repository_async import UsersRepositoryAsync
 from src.infrastructure.firebase.common.repositories.firestore_generic_repository_async import \
@@ -26,8 +26,7 @@ class FirestoreUsersRepositoryAsync(FirestoreGenericRepositoryAsync[User, str], 
 
         return None
 
-    @inject
-    def __init__(self, firestore_client: AsyncClient):
+    def __init__(self, firestore_client: AsyncClient = Depends(AsyncClient)):
         super().__init__(firestore_client, 'users', User)  # nombre de la colección
 
     async def get_user_by_email(self, email: str) -> Optional[User]:

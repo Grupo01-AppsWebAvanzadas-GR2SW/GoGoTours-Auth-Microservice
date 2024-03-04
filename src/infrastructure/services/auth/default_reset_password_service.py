@@ -1,21 +1,17 @@
-from flask import url_for
-from application.auth.dtos.reset_password_request_dto import ResetPasswordRequestDto
-from application.auth.services.reset_password_service_async import ResetPasswordServiceAsync
+from fastapi import Depends
+
+from src.application.auth.dtos.reset_password_request_dto import ResetPasswordRequestDto
+from src.application.auth.services.reset_password_service_async import ResetPasswordServiceAsync
 from src.application.auth.repositories.users_repository_async import UsersRepositoryAsync
-from injector import inject
 import bcrypt
-import string
-import secrets
 from itsdangerous import URLSafeTimedSerializer
-import os
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 
 class DefaultResetPasswordServiceAsync(ResetPasswordServiceAsync):
-    @inject
-    def __init__(self, users_repository_async: UsersRepositoryAsync):
+    def __init__(self, users_repository_async: UsersRepositoryAsync = Depends(UsersRepositoryAsync)):
         self._users_repository_async = users_repository_async
 
     async def request_reset_password(self, reset_request: ResetPasswordRequestDto) -> None:
