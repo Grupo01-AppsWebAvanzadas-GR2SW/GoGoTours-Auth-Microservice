@@ -20,15 +20,11 @@ class DefaultLoginServiceAsync(LoginServiceAsync):
             return ''
 
     async def login(self, user_dto: UserLoginRequestDto) -> Optional[UserResponseDto]:
-        print("empieza a verificar si existe email")
         user = await self._users_repository_async.get_user_by_email(user_dto.email)
-        print("email exist")
         if user:
-            print("existe email")
             if self._users_repository_async.password_matches(user_dto.password, user.password):
-                print("contraseñas iguales")
                 return UserResponseDto(username=user.username, id=user.id, is_admin=user.is_admin)
             else:
-                return None  # Contraseña incorrecta
+                return None
         else:
-            return None  # Usuario no encontrado por correo
+            return None

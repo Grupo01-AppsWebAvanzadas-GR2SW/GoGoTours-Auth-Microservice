@@ -67,8 +67,7 @@ class DefaultResetPasswordServiceAsync(ResetPasswordServiceAsync):
 
             # Crea el mensaje de correo electrónico
             subject = "Restablecimiento de contraseña"
-            reset_url = url_for('reset_password_succesful', token=reset_token, _external=True)
-            body = f"Haz clic en el siguiente enlace para restablecer tu contraseña: {reset_url}"
+            body = f"Haz clic en el siguiente enlace para restablecer tu contraseña:"
 
             message = MIMEMultipart()
             message.attach(MIMEText(body, 'plain'))

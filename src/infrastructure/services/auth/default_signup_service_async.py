@@ -12,16 +12,12 @@ class DefaultSignupServiceAsync(SignupServiceAsync):
         self._users_repository_async = users_repository_async
 
     async def signup_user(self, signup_request: UserSignupRequestDto):
-        # Verificar si el usuario ya existe en el repositorio (usando su email u otro identificador único)
         existing_user = await self._users_repository_async.get_user_by_email(signup_request.email)
         if existing_user:
             raise ValueError('El usuario ya está registrado')
 
-        # Hashear la contraseña antes de almacenarla en la base de datos
         hashed_password = bcrypt.hashpw(signup_request.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
-        # Crear una instancia de la entidad User
         new_user = User(email=signup_request.email, password=hashed_password, username=signup_request.username)
 
-        # Guardar el nuevo usuario en el repositorio
         await self._users_repository_async.create_user(new_user)

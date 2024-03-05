@@ -1,4 +1,3 @@
-from dotenv import load_dotenv, dotenv_values
 from fastapi import FastAPI
 
 from google.cloud.firestore import AsyncClient
@@ -15,14 +14,12 @@ from src.infrastructure.services.auth.default_signup_service_async import Defaul
 from src.webapi.auth_routes import auth_router
 
 initialize_firebase("config/firebase-credentials.json")
-config = dotenv_values("src/.env")
 app = FastAPI()
-print(config["JWT_SECRET_KEY"])
 app.dependency_overrides = {
     AsyncClient: get_firestore_async,
     UsersRepositoryAsync: FirestoreUsersRepositoryAsync,
     LoginServiceAsync: DefaultLoginServiceAsync,
     SignupServiceAsync: DefaultSignupServiceAsync,
-    ResetPasswordServiceAsync: DefaultResetPasswordServiceAsync,
+    ResetPasswordServiceAsync: DefaultResetPasswordServiceAsync
 }
 app.include_router(auth_router)

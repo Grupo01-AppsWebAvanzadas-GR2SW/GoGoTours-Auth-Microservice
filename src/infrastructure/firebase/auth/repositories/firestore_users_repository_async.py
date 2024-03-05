@@ -46,7 +46,7 @@ class FirestoreUsersRepositoryAsync(FirestoreGenericRepositoryAsync[User, str], 
 
         return None
 
-    async def password_matches(self, provided_password: str, hashed_password: str) -> bool:
+    def password_matches(self, provided_password: str, hashed_password: str) -> bool:
         return bcrypt.checkpw(provided_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
     async def create_user(self, user: User) -> User:
