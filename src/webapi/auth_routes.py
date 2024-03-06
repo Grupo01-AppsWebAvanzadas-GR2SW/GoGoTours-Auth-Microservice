@@ -94,7 +94,7 @@ async def request_password_reset(
         request_reset_password_dto: RequestResetPasswordRequestDto,
         reset_password_service: ResetPasswordServiceAsync = Depends(ResetPasswordServiceAsync)
 ):
-    await reset_password_service.request_reset_password(request_reset_password_dto.email)
+    await reset_password_service.request_reset_password(request_reset_password_dto)
     return {'message': 'Password reset request sent'}
 
 
@@ -103,7 +103,7 @@ async def reset_password(
         reset_password_dto: ResetPasswordRequestDto,
         reset_password_service: ResetPasswordServiceAsync = Depends(ResetPasswordServiceAsync)
 ):
-    result = await reset_password_service.reset_password(reset_password_dto.reset_token, reset_password_dto.new_password)
+    result = await reset_password_service.reset_password(reset_password_dto)
     if not result:
         raise HTTPException(status_code=400, detail="Invalid reset token")
     return {'message': 'Password reset successful'}

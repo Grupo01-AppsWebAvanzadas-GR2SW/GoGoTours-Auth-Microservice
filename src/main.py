@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from fastapi import FastAPI
 
 from google.cloud.firestore import AsyncClient
@@ -14,6 +15,7 @@ from src.infrastructure.services.auth.default_signup_service_async import Defaul
 from src.webapi.auth_routes import auth_router
 
 initialize_firebase("config/firebase-credentials.json")
+load_dotenv("src/.env")
 app = FastAPI()
 app.dependency_overrides = {
     AsyncClient: get_firestore_async,
