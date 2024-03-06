@@ -1,8 +1,11 @@
-FROM tiangolo/uvicorn-gunicorn:python3.11
-LABEL authors="Churukun"
-LABEL maintainer="Sebastian Ramirez <tiangolo@gmail.com>"
+FROM python:3.11
 
-COPY requirements.txt /tmp/requirements.txt
-RUN pip install --no-cache-dir -r /tmp/requirements.txt
+WORKDIR /code
 
-COPY ./src /app
+COPY ./requirements.txt /code/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+
+COPY ./src /code/src
+
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "80"]
