@@ -28,11 +28,13 @@ class BaseEntity(ABC, Generic[ID]):
         self._updated_at = datetime.now()
 
     def merge_dict(self, source: Dict[str, Any]) -> None:
+        self._id = source["id"] if 'id' in source else ""
         self._created_at = source["created_at"] if 'created_at' in source else datetime.now()
         self._updated_at = source["updated_at"] if 'updated_at' in source else None
 
     def to_dict(self) -> Dict[str, Any]:
         return {
+            "id": self._id,
             "created_at": self._created_at,
             "updated_at": self._updated_at
         }

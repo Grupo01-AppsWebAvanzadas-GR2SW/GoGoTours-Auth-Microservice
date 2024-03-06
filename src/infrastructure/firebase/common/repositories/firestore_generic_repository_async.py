@@ -2,7 +2,6 @@ from typing import Generic, TypeVar, Optional, Callable
 from google.cloud.firestore import AsyncClient
 from src.domain.common.entities.base_entity import BaseEntity
 from src.application.common.repositories.generic_repository_async import GenericRepositoryAsync
-from injector import inject
 
 
 ID = TypeVar("ID")
@@ -10,7 +9,6 @@ T = TypeVar("T", bound=BaseEntity)
 
 
 class FirestoreGenericRepositoryAsync(GenericRepositoryAsync, Generic[T, ID]):
-    @inject
     def __init__(self, firestore_client: AsyncClient, collection_name: str, entity_constructor: Callable[[], T]):
         self._firestore_client = firestore_client
         self._collection_name = collection_name
