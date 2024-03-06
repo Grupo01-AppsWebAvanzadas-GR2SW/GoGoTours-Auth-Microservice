@@ -14,7 +14,7 @@ from src.infrastructure.services.auth.default_reset_password_service import Defa
 from src.infrastructure.services.auth.default_signup_service_async import DefaultSignupServiceAsync
 from src.webapi.auth_routes import auth_router
 
-initialize_firebase("config/firebase-credentials.json")
+initialize_firebase("/etc/secrets/firebase-credentials.json")
 load_dotenv("src/.env")
 app = FastAPI()
 app.dependency_overrides = {
